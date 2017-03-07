@@ -1,0 +1,102 @@
+body {
+    background: url("../../resource/img/shutterstock_214919470-min.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: "Roboto Slab", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+header .intro-text {
+    padding-top: 200px;
+    padding-bottom: 50px;
+    color: snow;
+
+}
+header .intro-text .intro-lead-in {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 22px;
+    margin-bottom: 25px;
+}
+header .intro-text .intro-heading {
+    font-family: Tahoma, Geneva, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 50px;
+    margin-bottom: 25px;
+}
+
+.templateView{
+    margin-top: 9rem;
+    margin-bottom: 7rem;
+}
+
+.formView{
+    background-color: black;
+    opacity: 0.9;
+    border-radius: 10px;
+}
+
+.fieldSetView{
+    color: white;
+}
+
+.legendView{
+    color: white;
+    padding:7px;
+}
+
+.bottomMargin{
+    margin-bottom: 20px;
+}
+
+.orderTitle{
+    font-size: large;
+}
+
+.orderContent{
+    margin-left: 3rem;
+}
+
+.landingPage{
+    overflow-x: hidden;
+}
+
+.orderInst{
+    font-style: italic;
+}
+
+.btn-group{
+    margin-bottom: 2rem;
+}
+
+.btn-secondary{
+    color: black;
+}
+
+.totalRow{
+    border-top: 1px solid white;
+}
+
+.productTable{
+    margin: 1rem;
+}
+
+.myCartButton{
+    margin-top: 2rem;
+    margin-left: 3rem;
+}
+
+.disableButton{
+    pointer-events: none;
+}
+
+.pizzaBase{
+    margin-left: 1rem;
+}
+
+.myCartTable{
+    border: 1px solid white;
+}

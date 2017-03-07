@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pizza House</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
+    <link rel = "stylesheet" type = "text/css" href = "views/css/myStyle.css" />
+    <script src="controllers/app.js"></script>
+    <script src="controllers/orderCtrl.js"></script>
+    <script src="controllers/productsCtrl.js"></script>
+    <script src="controllers/mycartCtrl.js"></script>
+</head>
+<body ng-app="pizzaApp">
+    <div ng-controller="productsCtrl">
+        <nav class="navbar navbar-default navbar-fixed-top transparent">
+            <div class="container">
+            <div class="row">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#home">Pizza House</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                       <li ng-class="{ active: isActive('/home')}"><a href="#home" data-toggle="collapse" data-target=".navbar-collapse.in">Home</a></li>
+                       <li ng-class="{ active: isActive('/products')}"><a href="#products" data-toggle="collapse" data-target=".navbar-collapse.in">Products</a></li>
+                       <li ng-class="{ active: isActive('/order')}"><a href="#order" data-toggle="collapse" data-target=".navbar-collapse.in">Order now</a></li>
+                        <li ng-class="{ active: isActive('/mycart')}"><a href="#mycart" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-shopping-cart"></span> My Cart</a></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </div>
+
+        <div class="row landingPage">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-11 templateView" ng-view></div>
+        </div>
+
+</body>
+<!-- May be placed in different files but for running the app without server on browser, included the ng-templates -->
+<script type="text/ng-template" id="products.html">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-9" tabindex="-1">
+    <form class="formView">
+      <fieldset class="fieldSetView">
+        <legend class="legendView"><div class="col-sm-5"></div><span style="font-weight: 700;">Products</span></legend>
+           <table class="col-sm-10 productTable">
+            <tbody >
+                <tr>
+                    <td><label>Pizza Base</label></td><td></td><td></td>
+                </tr>
+                <tr ng-repeat ="pizzaBase in pizzaBase" >
+                    <td></td><td><span>{{pizzaBase.name}}</span></td><td><span>${{pizzaBase.price}}</span></td>
+                </tr>
+                <tr>
+                    <td><label>Topping</label></td><td></td><td></td>
+                </tr>
+                <tr ng-repeat = "topping in toppings">
+                    <td></td><td><span>{{topping.name}}</span></td><td><span>${{topping.price}}</span></td>
+                </tr>
+                <tr>
+                    <td><label>Veggies</label></td><td></td><td></td>
+                </tr>
+                <tr ng-repeat = "veggie in veggies">
+                    <td></td><td><span>{{veggie.name}}</span></td><td><span>${{veggie.price}}</span></td>
+                </tr>
+                <tr>
+                    <td><label>Cheese</label></td><td></td><td></td>
+                </tr>
+                <tr  ng-repeat = "cheese in cheese">
+                    <td></td><td><span>{{cheese.name}}</span></td><td><span>${{cheese.price}}</span></td>
+                </tr>
+                <tr>
+                    <td><label>Sauces</label></td><td></td><td></td>
+                </tr>
+                <tr ng-repeat = "sauce in sauces">
+                    <td></td><td><span>{{sauce.name}}</span></td><td><span>${{sauce.price}}</span></td>
+                </tr>
+                <tr>
+                    <td><label>Sides & Desserts</label></td><td></td><td></td>
+                </tr>
+                <tr ng-repeat = "sidesAndDesserts in sidesAndDesserts">
+                    <td></td><td><span>{{sidesAndDesserts.name}}</span></td><td><span>${{sidesAndDesserts.price}}</span></td>
+                </tr>
+                <tr>
+                    <td><label>Extras</label></td><td></td><td></td>
+                </tr>
+                <tr ng-repeat = "extras in extras">
+                    <td></td><td><span>{{extras.name}}</span></td><td><span>${{extras.price}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+      </fieldset>
+    </form>
+</script>
+<script type="text/ng-template" id="order.html">
+    <div class="col-sm-6" tabindex="-1">
+    <form class="formView">
+      <fieldset class="fieldSetView">
+        <legend class="legendView">Order Details:</legend>
+        <div class="row bottomMargin">
+            <div class="col-sm-2"></div>
+            <div class="col col-sm-9">
+                <div class="form-group">
+                    <div class="col-md-9">
+                        <label class="orderTitle">Pizza Base</label><span style="color:red">&nbsp;*</span>
+                        <br><span style="color:red" ng-show = "pizzaBaseValidation">Select Pizzabase</span>
+                             <select class="form-control pizzaBase" ng-options="item as item.name for item in pizzaBase track by item.id" ng-model="selectedPizzaBase" ng-change="togglePizzaBase()"></select>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col col-sm-9">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label class="orderTitle">Topping</label><span class="orderInst"><span style="color:red">&nbsp;*</span>&nbsp;&nbsp;(Select Maximum 3)</span>
+                        <br><span style="color:red" ng-show = "toppingValidationMax">Maximum 3 allowed</span><span style="color:red" ng-show = "toppingValidation">Select Atleast One Toppiong</span>
+                        <div class="checkbox orderContent" ng-repeat ="topping in toppings">
+                          <label><input type="checkbox" ng-click="toggleTopping(topping)" ng-model ="topping.selected">{{topping.name}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col col-sm-9">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label class="orderTitle">Veggies</label><span class="orderInst"><span style="color:red">&nbsp;*</span>&nbsp;&nbsp;(Select Maximum 5)</span>
+                        <br><span style="color:red" ng-show = "veggiesValidationMax">Maximum 5 allowed</span><span style="color:red" ng-show = "veggiesValidation">Select Atleast One Veggies</span>
+                        <div class="checkbox orderContent" ng-repeat ="veggie in veggies">
+                          <label><input type="checkbox" ng-click="toggleVeggies(veggie)" ng-model ="veggie.selected">{{veggie.name}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col col-sm-9">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label class="orderTitle">Cheese</label><span style="color:red">&nbsp;*</span>
+                        <br><span style="color:red" ng-show = "cheeseValidation">Select Cheese</span>
+                        <div class="radio orderContent" ng-repeat ="cheese in cheese">
+                          <label><input type="radio" ng-click="toggleCheese(cheese)" name="cheeseRadio" ng-model = "cheeseRadio">{{cheese.name}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col col-sm-9">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label class="orderTitle">Sauces</label><span style="color:red">&nbsp;*</span>
+                        <br><span style="color:red" ng-show = "sauceValidation">Select Atleast One Sauce</span>
+                        <div class="checkbox orderContent" ng-repeat ="sauce in sauces">
+                          <label><input type="checkbox" ng-click="toggleSauce(sauce)" ng-model ="sauce.selected">{{sauce.name}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col col-sm-9">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label class="orderTitle">Sides & Desserts</label>
+                        <div class="checkbox orderContent" ng-repeat ="sidesAndDessert in sidesAndDesserts">
+                          <label><input type="checkbox" ng-click="toggleSidesAndDesserts(sidesAndDessert)" ng-model ="sidesAndDessert.selected">{{sidesAndDessert.name}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col col-sm-9">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label class="orderTitle">Extras</label>
+                        <div class="checkbox orderContent" ng-repeat ="extra in extras">
+                          <label><input type="checkbox" ng-click="toggleExtras(extra)" ng-model ="extra.selected">{{extra.name}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </fieldset>
+    </form>
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-4" >
+    <form class="formView">
+      <fieldset class="fieldSetView">
+        <legend class="legendView">&nbsp;<span class="glyphicon glyphicon-shopping-cart">&nbsp;</span>My Order:</legend>
+          <div class="col-sm-1"></div>
+         <div class="col-sm-10">
+             <table >
+                 <tbody>
+                     <tr>
+                         <td><label>Pizza Base</label></td><td></td><td></td>
+                     </tr>
+                     <tr ng-if = "selectedPizzaBase.name">
+                         <td></td><td><span>{{selectedPizzaBase.name}}</span></td><td><span>${{selectedPizzaBase.price}}</span></td>
+                     </tr>
+                     <tr>
+                         <td><label>Topping</label></td><td></td><td></td>
+                     </tr>
+                     <tr ng-repeat = "topping in selectedTopping">
+                         <td></td><td><span>{{topping.name}}</span></td><td><span>${{topping.price}}</span></td>
+                     </tr>
+                     <tr>
+                         <td><label>Veggies</label></td><td></td><td></td>
+                     </tr>
+                     <tr ng-repeat = "veggie in selectedVeggies">
+                         <td></td><td><span>{{veggie.name}}</span></td><td><span>${{veggie.price}}</span></td>
+                     </tr>
+                     <tr>
+                         <td><label>Cheese</label></td><td></td><td></td>
+                     </tr>
+                     <tr ng-if="selectedcheese.name">
+                         <td></td><td><span>{{selectedcheese.name}}</span></td><td><span>${{selectedcheese.price}}</span></td>
+                     </tr>
+                     <tr>
+                         <td><label>Sauces</label></td><td></td><td></td>
+                     </tr>
+                     <tr ng-repeat = "sauce in selectedSauces">
+                         <td></td><td><span>{{sauce.name}}</span></td><td><span>${{sauce.price}}</span></td>
+                     </tr>
+                     <tr>
+                         <td><label>Sides & Desserts</label></td><td></td><td></td>
+                     </tr>
+                     <tr ng-repeat = "sidesAndDesserts in selectedSidesAndDesserts">
+                         <td></td><td><span>{{sidesAndDesserts.name}}</span></td><td><span>${{sidesAndDesserts.price}}</span></td>
+                     </tr>
+                     <tr>
+                         <td><label>Extras</label></td><td></td><td></td>
+                     </tr>
+                     <tr ng-repeat = "extras in selectedExtras">
+                         <td></td><td><span>{{extras.name}}</span></td><td><span>${{extras.price}}</span></td>
+                     </tr>
+                     <tr class="totalRow">
+                         <td><label>Total</label></td><td></td><td>${{finalTotal}}</td>
+                     </tr>
+                 </tbody>
+             </table></div>
+
+        <div class="col-sm-12">
+            <div class="col-sm-3"></div>
+            <div class="btn-group">
+            <button type="button" class="btn btn-primary" ng-click = "validateOrder()">Place Order</button>
+            <button type="button" class="btn btn-secondary" ng-click = "cancelOrder()">Cancel</button>
+            </div>
+            <div clsss="col-sm-3"></div>
+        </div>
+      </fieldset>
+    </form>
+    </div>
+</script>
+<script type="text/ng-template" id="home.html">
+    <header>
+            <div class="container">
+                <div class="intro-text">
+                    <div class="intro-lead-in">Welcome To Our Pizza House!</div>
+                    <div class="intro-heading">It's Nice To Meet You</div>
+                </div>
+            </div>
+    </header>
+</script>
+<script type="text/ng-template" id="mycart.html">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-7" tabindex="-1">
+    <form class="formView">
+      <fieldset class="fieldSetView">
+        <legend class="legendView">&nbsp;<span class="glyphicon glyphicon-shopping-cart">&nbsp;</span>My Cart:</legend>
+          <div class="col-sm-1"></div>
+          <span ng-show = "emptyCart"> Your Cart is Empty</span>
+        <table class="col-sm-10" ng-show = "!emptyCart">
+            <tbody class="myCartTable">
+                <tr ng-repeat = "order in order">
+                    <td></td><td><span>{{order.name}}</span></td><td><span>${{order.price}}</span></td>
+                </tr>
+                <tr class="totalRow">
+                    <td><label>Total</label></td><td></td><td>${{finalTotal}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-sm-12">
+            <div class="col-sm-3"></div>
+            <div class="btn-group myCartButton" ng-class="{disableButton: emptyCart == true}">
+            <button type="button" class="btn btn-primary" ng-click = "placeOrder()">Order</button>
+            <button type="button" class="btn btn-secondary" ng-click = "cancel()">Cancel</button>
+            </div>
+            <div clsss="col-sm-3"></div>
+        </div>
+      </fieldset>
+    </form>
+    </div>
+</script>
+</html>
